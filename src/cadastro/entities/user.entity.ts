@@ -15,5 +15,5 @@ export class User {
   password: string;
 
   @Column()
-  dateRegister: Date;
+  createdAt: Date;
 }
