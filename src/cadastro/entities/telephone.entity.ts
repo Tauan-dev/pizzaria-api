@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('telephone')
 export class Telephone {
@@ -14,5 +15,8 @@ export class Telephone {
   @Column()
   number: string;
 
-  // many to one client
+  @ManyToOne(() => User, (user) => user.telephone, {
+    cascade: true,
+  })
+  user: User;
 }

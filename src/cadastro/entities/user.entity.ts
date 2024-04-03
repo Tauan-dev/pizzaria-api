@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Adress } from './adress.entity';
+import { Telephone } from './telephone.entity';
 
 @Entity('user')
 export class User {
@@ -14,6 +22,18 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @CreateDateColumn({
+    type: 'timestamp',
+  })
   createdAt: Date;
+
+  @OneToMany(() => Adress, (adress) => adress.user, {
+    cascade: true,
+  })
+  adress: Adress[];
+
+  @OneToMany(() => Telephone, (telephone) => telephone.user, {
+    cascade: true,
+  })
+  telephone: Telephone[];
 }

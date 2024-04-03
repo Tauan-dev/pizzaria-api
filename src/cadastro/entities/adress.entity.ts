@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('adress')
 export class Adress {
@@ -28,8 +29,12 @@ export class Adress {
 
   @Column()
   cep: string;
-  // many to one (user)
 
   @Column()
   createdAt: Date;
+
+  @ManyToOne(() => User, (user) => user.adress, {
+    cascade: true,
+  })
+  user: User;
 }
