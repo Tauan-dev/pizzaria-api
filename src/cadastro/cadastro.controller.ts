@@ -20,7 +20,7 @@ export class CadastroController {
     return this.cadastroService.findAllUser();
   }
 
-  @Get(':cpf')
+  @Get('user/:cpf')
   findOne(@Param('cpf') cpf: string) {
     return this.cadastroService.findOne(cpf);
   }
@@ -32,11 +32,11 @@ export class CadastroController {
 
   @Put('updateuser/:cpf')
   update(@Param('cpf') cpf: string, @Body() UpdateUser: UpdateUserDTO) {
-    return this.cadastroService.update(UpdateUser, cpf);
+    return this.cadastroService.update(cpf, UpdateUser);
   }
 
   @Delete()
-  remove(@Param('cpf') cpf: string) {
-    return this.cadastroService.remove(cpf);
+  delete(@Param('cpf') cpf: string) {
+    return this.cadastroService.delete(cpf);
   }
 }

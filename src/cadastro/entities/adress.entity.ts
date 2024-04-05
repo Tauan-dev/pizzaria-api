@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from './user.entity';
 
 @Entity('adress')
@@ -30,11 +36,11 @@ export class Adress {
   @Column()
   cep: string;
 
-  @Column()
+  @CreateDateColumn({
+    type: 'timestamp',
+  })
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.adress, {
-    cascade: true,
-  })
+  @ManyToOne(() => User, (user) => user.adress)
   user: User;
 }

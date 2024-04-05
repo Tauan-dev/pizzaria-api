@@ -1,24 +1,23 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
+import { Adress } from './entities/adress.entity';
+import { Telephone } from './entities/telephone.entity';
 
 @Injectable()
 export class CadastroService {
-  remove(cpf: any) {
-      throw new Error('Method not implemented.');
-  }
-  update(UpdateUser: UpdateUserDTO, cpf: string) {
-      throw new Error('Method not implemented.');
-  }
-  create(CreateUser: CreateUserDTO) {
-      throw new Error('Method not implemented.');
-  }
   constructor(
     @InjectRepository(User)
     private readonly registerRepository: Repository<User>,
+
+    @InjectRepository(Adress)
+    private readonly adressRepository: Repository<Adress>,
+
+    @InjectRepository(Telephone)
+    private readonly phoneRepository: Repository<Telephone>,
   ) {}
 
   async findAllUser() {
@@ -35,12 +34,19 @@ export class CadastroService {
     return user;
   }
 
-  async createUser(creatUser: CreateUserDTO) {
-    const user = this.registerRepository.create(creatUser);
+  async create(createUser: CreateUserDTO) {
+    const adress = await Promise.all(
+      createUser.adress.map((id) => this.preloadAdressById(id)),
+    );
+
+    const user = this.registerRepository.create({
+      ...createUser,
+      adress,
+    });
     return this.registerRepository.save(user);
   }
 
-  async updateUser(cpf: string, updateUser: UpdateUserDTO) {
+  async update(cpf: string, updateUser: UpdateUserDTO) {
     const user = await this.registerRepository.preload({
       ...updateUser,
       cpf,
@@ -51,7 +57,7 @@ export class CadastroService {
     return this.registerRepository.save(user);
   }
 
-  async deleteUser(cpf: string) {
+  async delete(cpf: string) {
     const user = await this.registerRepository.findOne({
       where: { cpf },
     });
@@ -59,5 +65,13 @@ export class CadastroService {
       throw new NotFoundException(`User not found!`);
     }
     return this.registerRepository.remove(user);
+  }
+
+  private async preloadAdressById(id: number): Promise<Adress> {
+    let adress = await this.adressRepository.findOne({ where: { id } });
+    if (!adress) {
+      adress = this.adressRepository.create({ id });
+    }
+    return adress;
   }
 }

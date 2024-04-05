@@ -15,4 +15,6 @@ export class CreateUserDTO {
 
   @IsDate()
   readonly createdAt: Date;
+
+  adress: any;
 }

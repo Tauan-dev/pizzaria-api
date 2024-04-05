@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Adress } from 'src/cadastro/entities/adress.entity';
+import { Telephone } from 'src/cadastro/entities/telephone.entity';
 import { User } from 'src/cadastro/entities/user.entity';
 import { DataSourceOptions } from 'typeorm';
 
@@ -10,7 +12,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'root',
   password: 'tauan198',
   database: 'pizzaria_nest',
-  entities: [User],
+  entities: [User, Adress, Telephone],
   synchronize: false,
 };
 

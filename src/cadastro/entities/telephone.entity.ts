@@ -15,8 +15,6 @@ export class Telephone {
   @Column()
   number: string;
 
-  @ManyToOne(() => User, (user) => user.telephone, {
-    cascade: true,
-  })
+  @ManyToOne(() => User, (user) => user.telephone)
   user: User;
 }
