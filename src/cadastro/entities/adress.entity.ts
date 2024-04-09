@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Order } from 'src/pizzaria/entities/order.entity';
 
 @Entity('adress')
 export class Adress {
@@ -43,4 +45,9 @@ export class Adress {
 
   @ManyToOne(() => User, (user) => user.adress)
   user: User;
+
+  @OneToMany(() => Order, (order) => order.adress, {
+    cascade: true,
+  })
+  order: Order;
 }

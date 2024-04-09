@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Adress } from './adress.entity';
 import { Telephone } from './telephone.entity';
+import { Order } from 'src/pizzaria/entities/order.entity';
 
 @Entity('user')
 export class User {
@@ -36,4 +37,9 @@ export class User {
     cascade: true,
   })
   telephone: Telephone[];
+
+  @OneToMany(() => Order, (order) => order.user, {
+    cascade: true,
+  })
+  order: Order;
 }
