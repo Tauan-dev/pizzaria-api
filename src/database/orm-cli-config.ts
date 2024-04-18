@@ -7,6 +7,9 @@ import { AddUserIdToUserAdressTable1713390331233 } from 'src/migrations/17133903
 import { AddAdressIdToUsersAdressTable1713391758436 } from 'src/migrations/1713391758436-AddAdressIdToUsersAdressTable';
 import { CreateIngredientTable1713393235062 } from 'src/migrations/1713393235062-CreateIngredientTable';
 import { CreateOrderTable1713393429178 } from 'src/migrations/1713393429178-CreateOrderTable';
+import { CreatePizzaOrderTable1713450478799 } from 'src/migrations/1713450478799-CreatePizzaOrderTable';
+import { CreatePizzaTable1713451576906 } from 'src/migrations/1713451576906-CreatePizzaTable';
+import { CreatePizzaIngredientTable1713452059324 } from 'src/migrations/1713452059324-CreatePizzaIngredientTable';
 
 export const dataSource = new DataSource({
   ...dataSourceOptions,
@@ -19,5 +22,8 @@ export const dataSource = new DataSource({
     AddAdressIdToUsersAdressTable1713391758436,
     CreateIngredientTable1713393235062,
     CreateOrderTable1713393429178,
+    CreatePizzaTable1713451576906,
+    CreatePizzaOrderTable1713450478799,
+    CreatePizzaIngredientTable1713452059324,
   ],
 });
